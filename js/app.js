@@ -14,20 +14,34 @@ document.addEventListener('DOMContentLoaded', function(){
     inputMensaje.addEventListener('blur', validar);
 
     function validar(e){
-        if(e.target.value.trim() === ''){
-            mostrarAlerta();
-        }else{
-            console.log('Si hay algo');
-        }
+        if(e.target.value.trim() === '')
+            mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
+            return;
 
+            
+        limpiarAlerta();
     }
 
-    function mostrarAlerta(){
+
+    function mostrarAlerta(mensaje, referencia){
+        //Comprueba si ya existe la alerta
+        const alerta = referencia.querySelector('.bg-red-600');
+        if(alerta){
+            alerta.remove();    
+        }
+
         // Generar alerta en HTML
         const error = document.createElement('P'); 
-        error.textContent = 'Hubo un error';
+        error.textContent = mensaje;
+        error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center');
 
         // Inyectar el error al formulario
+        referencia.appendChild(error);
+        
+    }
+
+    function limpiarAlerta(){
+        console.log('Desde limpiar alerta');
         
     }
 });
